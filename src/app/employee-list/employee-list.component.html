@@ -1,1 +1,38 @@
-<p>employee-list works!</p>
+<div *ngIf="errorMessage" class="error-message">
+  <p>Error occurred while loading data, please try fetching again:</p>
+  <button (click)="retry()">
+    <i class="fas fa-redo"></i> Retry
+  </button>
+</div>
+
+<div *ngIf="!errorMessage">
+  <div class="employee-list desktop-view" *ngIf="!isMobile">
+    <table>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Date of Birth</th>
+          <th>Job Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <td>{{ employee.firstName || 'N/A' }}</td>
+          <td>{{ employee.lastName || 'N/A' }}</td>
+          <td>{{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</td>
+          <td>{{ employee.jobTitle || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="employee-list mobile-view" *ngIf="isMobile">
+    <div *ngFor="let employee of employees" class="employee-card">
+      <p><strong>First Name:</strong> {{ employee.firstName || 'N/A' }}</p>
+      <p><strong>Last Name:</strong> {{ employee.lastName || 'N/A' }}</p>
+      <p><strong>Date of Birth:</strong> {{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</p>
+      <p><strong>Job Title:</strong> {{ employee.jobTitle || 'N/A' }}</p>
+    </div>
+  </div>
+</div>

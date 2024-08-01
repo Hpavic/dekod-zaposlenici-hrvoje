@@ -1,0 +1,75 @@
+/* Styles for the desktop view */
+.desktop-view table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .desktop-view th, .desktop-view td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .desktop-view th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  /* Styles for the mobile view */
+  .mobile-view {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .employee-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .desktop-view {
+      display: none;
+    }
+  
+    .mobile-view {
+      display: flex;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .desktop-view {
+      display: table;
+    }
+  
+    .mobile-view {
+      display: none;
+    }
+  }
+
+  .error-message {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .error-message p {
+    color: red;
+  }
+  
+  .error-message button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .error-message button i {
+    margin-right: 5px;
+  }
+  
+  .error-message button:hover {
+    background-color: #0056b3;
+  }
