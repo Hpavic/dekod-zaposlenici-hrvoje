@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError, retry, of, tap } from 'rxjs';
+import { environment } from '../environment/environment';
 import { Employee, ApiResponse } from '../models/employee.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private apiUrl = 'https://api.test.ulaznice.hr/paganini/api/job-interview/employees';
+  private apiUrl = environment.apiUrl;
   private employeesCache: Employee[] | null = null;
 
   constructor(private http: HttpClient) { }
