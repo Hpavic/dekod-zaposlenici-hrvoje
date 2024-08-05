@@ -1,0 +1,21 @@
+.sort-container {
+    margin-bottom: 20px;
+}
+  
+.sort-container p {
+    font-weight: bold;
+}
+
+.sort-container div {
+    margin-bottom: 10px;
+}
+
+button {
+    margin-right: 10px;
+}
+
+button.selected {
+    background-color: #007bff;
+    color: white;
+}
+  

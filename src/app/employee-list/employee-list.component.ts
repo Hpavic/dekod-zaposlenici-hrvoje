@@ -3,13 +3,14 @@ import { EmployeeService } from '../services/employee.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Observer } from 'rxjs';
-import { Employee, ApiResponse } from '../models/employee.model';
+import { Employee, ApiResponse, EmployeeCriteria } from '../models/employee.model';
 import { EmployeeFilterComponent } from '../employee-filter/employee-filter.component';
+import { EmployeeSortComponent } from '../employee-sort/employee-sort.component';
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [CommonModule, DatePipe, HttpClientModule, EmployeeFilterComponent],
+  imports: [CommonModule, DatePipe, HttpClientModule, EmployeeFilterComponent, EmployeeSortComponent],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
@@ -21,6 +22,7 @@ export class EmployeeListComponent implements OnInit {
   errorMessage: string | null = null;
   isMobile: boolean = false;
   isLoading: boolean = true;
+  sortCriteria: { criteria: keyof EmployeeCriteria, direction: string } | null = null;
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -45,7 +47,8 @@ export class EmployeeListComponent implements OnInit {
           this.employees = data.data;
           this.positions = [...new Set(this.employees.map(emp => emp.jobTitle))];
           this.selectedPositions = [...this.positions];
-          this.filterEmployees();
+          this.filteredEmployees = [...this.employees];
+          this.applySort();
           this.errorMessage = null;
         }
         this.isLoading = false;
@@ -66,10 +69,31 @@ export class EmployeeListComponent implements OnInit {
     this.filterEmployees();
   }
 
+  onSortSelected(sortCriteria: { criteria: keyof EmployeeCriteria, direction: string }): void {
+    this.sortCriteria = sortCriteria;
+    this.applySort();
+  }
+
   filterEmployees(): void {
     this.filteredEmployees = this.employees.filter(emp =>
       this.selectedPositions.includes(emp.jobTitle)
     );
+    this.applySort();
+  }
+
+  applySort(): void {
+    if (this.sortCriteria) {
+      const { criteria, direction } = this.sortCriteria;
+      this.filteredEmployees.sort((a, b) => {
+        let comparison = 0;
+        if (criteria === 'dateOfBirth') {
+          comparison = new Date(a.dateOfBirth).getTime() - new Date(b.dateOfBirth).getTime();
+        } else {
+          comparison = (a[criteria] as string).localeCompare(b[criteria] as string);
+        }
+        return direction === 'asc' ? comparison : -comparison;
+      });
+    }
   }
 
   retry(): void {

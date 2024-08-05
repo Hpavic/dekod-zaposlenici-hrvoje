@@ -1,0 +1,19 @@
+<div class="sort-container">
+  <p>Sort by:</p>
+  <div>
+    <button (click)="sort('firstName', 'asc')" [class.selected]="selectedCriteria === 'firstName' && selectedDirection === 'asc'">First Name A-Z</button>
+    <button (click)="sort('firstName', 'desc')" [class.selected]="selectedCriteria === 'firstName' && selectedDirection === 'desc'">First Name Z-A</button>
+  </div>
+  <div>
+    <button (click)="sort('lastName', 'asc')" [class.selected]="selectedCriteria === 'lastName' && selectedDirection === 'asc'">Last Name A-Z</button>
+    <button (click)="sort('lastName', 'desc')" [class.selected]="selectedCriteria === 'lastName' && selectedDirection === 'desc'">Last Name Z-A</button>
+  </div>
+  <div>
+    <button (click)="sort('dateOfBirth', 'asc')" [class.selected]="selectedCriteria === 'dateOfBirth' && selectedDirection === 'asc'">Oldest -> Youngest</button>
+    <button (click)="sort('dateOfBirth', 'desc')" [class.selected]="selectedCriteria === 'dateOfBirth' && selectedDirection === 'desc'">Youngest -> Oldest</button>
+  </div>
+  <div>
+    <button (click)="sort('jobTitle', 'asc')" [class.selected]="selectedCriteria === 'jobTitle' && selectedDirection === 'asc'">Job Title A-Z</button>
+    <button (click)="sort('jobTitle', 'desc')" [class.selected]="selectedCriteria === 'jobTitle' && selectedDirection === 'desc'">Job Title Z-A</button>
+  </div>
+</div>

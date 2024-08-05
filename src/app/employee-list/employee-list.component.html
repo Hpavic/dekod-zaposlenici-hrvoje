@@ -11,6 +11,11 @@
     <app-employee-filter [positions]="positions" (filterSelected)="onFilterSelected($event)"></app-employee-filter>
   </ng-container>
 
+  <!-- Render Sort Component -->
+  <ng-container *ngIf="!isLoading">
+    <app-employee-sort (sortSelected)="onSortSelected($event)"></app-employee-sort>
+  </ng-container>
+
   <!-- Display message when no employees are found -->
   <div *ngIf="filteredEmployees.length === 0 && !isLoading" class="no-results">
     No results found.

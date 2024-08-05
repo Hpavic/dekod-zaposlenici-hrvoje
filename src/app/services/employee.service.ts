@@ -25,7 +25,7 @@ export class EmployeeService {
     return this.http.get<ApiResponse>(this.apiUrl).pipe(
         tap(data => {
             if (data.success) {
-                this.employeesCache = data.data;
+                this.employeesCache = data.data.sort((a, b) => a.jobTitle.localeCompare(b.jobTitle));
             }
         }),
         retry(3),
