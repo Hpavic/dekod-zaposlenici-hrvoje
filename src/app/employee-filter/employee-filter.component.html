@@ -1,0 +1,8 @@
+<div class="filter-container">
+  <p>Filter by position:</p>
+  <button *ngFor="let position of positions"
+          [class.selected]="selectedPositions.includes(position)"
+          (click)="togglePosition(position)">
+    {{ position }}
+  </button>
+</div>

@@ -73,3 +73,10 @@
   .error-message button:hover {
     background-color: #0056b3;
   }
+
+  .no-results {
+    text-align: center;
+    font-size: 1.2em;
+    color: #999;
+    margin-top: 20px;
+  }

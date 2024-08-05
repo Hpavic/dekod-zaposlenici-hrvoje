@@ -6,7 +6,17 @@
 </div>
 
 <div *ngIf="!errorMessage">
-  <div class="employee-list desktop-view" *ngIf="!isMobile">
+  <!-- Render Filter Component -->
+  <ng-container *ngIf="positions.length > 0">
+    <app-employee-filter [positions]="positions" (filterSelected)="onFilterSelected($event)"></app-employee-filter>
+  </ng-container>
+
+  <!-- Display message when no employees are found -->
+  <div *ngIf="filteredEmployees.length === 0 && !isLoading" class="no-results">
+    No results found.
+  </div>
+
+  <div class="employee-list desktop-view" *ngIf="!isMobile && filteredEmployees.length > 0">
     <table>
       <thead>
         <tr>
@@ -17,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let employee of employees">
+        <tr *ngFor="let employee of filteredEmployees">
           <td>{{ employee.firstName || 'N/A' }}</td>
           <td>{{ employee.lastName || 'N/A' }}</td>
           <td>{{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</td>
@@ -27,12 +37,17 @@
     </table>
   </div>
 
-  <div class="employee-list mobile-view" *ngIf="isMobile">
-    <div *ngFor="let employee of employees" class="employee-card">
+  <div class="employee-list mobile-view" *ngIf="isMobile && filteredEmployees.length > 0">
+    <div *ngFor="let employee of filteredEmployees" class="employee-card">
       <p><strong>First Name:</strong> {{ employee.firstName || 'N/A' }}</p>
       <p><strong>Last Name:</strong> {{ employee.lastName || 'N/A' }}</p>
       <p><strong>Date of Birth:</strong> {{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</p>
       <p><strong>Job Title:</strong> {{ employee.jobTitle || 'N/A' }}</p>
     </div>
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-indicator">
+    Loading data, please wait...
   </div>
 </div>
