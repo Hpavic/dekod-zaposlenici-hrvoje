@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmployeeCriteria } from '../models/employee.model';
+import { SortCriteria, SortDirection } from '../models/employee.model';
 
 @Component({
   selector: 'app-employee-sort',
@@ -10,17 +10,22 @@ import { EmployeeCriteria } from '../models/employee.model';
   styleUrl: './employee-sort.component.css'
 })
 export class EmployeeSortComponent {
-  @Output() sortSelected: EventEmitter<{ criteria: keyof EmployeeCriteria, direction: string }> = new EventEmitter<{ criteria: keyof EmployeeCriteria, direction: string }>();
+  @Output() sortSelected: EventEmitter<{ criteria: SortCriteria, direction: SortDirection }> = new EventEmitter<{ criteria: SortCriteria, direction: SortDirection }>();
 
-  selectedCriteria: keyof EmployeeCriteria | null = null;
-  selectedDirection: string | null = null;
+  selectedCriteria: SortCriteria | null = null;
+  selectedDirection: SortDirection | null = null;
+  SortDirection = SortDirection;
+  SortCriteria = SortCriteria;
 
-  sort(criteria: keyof EmployeeCriteria, direction: string): void {
+  sort(criteria: SortCriteria, direction: SortDirection): void {
+    // If the same criteria and direction are already selected, do nothing
     if (this.selectedCriteria === criteria && this.selectedDirection === direction) {
-      return; // Already selected, do nothing
+      return;
     }
     this.selectedCriteria = criteria;
     this.selectedDirection = direction;
+    // Emit event with selected sorting criteria and direction
+    console.log('Emitting selected sort criteria and direction:', { criteria, direction });
     this.sortSelected.emit({ criteria, direction });
   }
 }

@@ -3,7 +3,7 @@ import { EmployeeService } from '../services/employee.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Observer } from 'rxjs';
-import { Employee, ApiResponse, EmployeeCriteria } from '../models/employee.model';
+import { Employee, ApiResponse, SortCriteria, SortDirection } from '../models/employee.model';
 import { EmployeeFilterComponent } from '../employee-filter/employee-filter.component';
 import { EmployeeSortComponent } from '../employee-sort/employee-sort.component';
 
@@ -22,7 +22,7 @@ export class EmployeeListComponent implements OnInit {
   errorMessage: string | null = null;
   isMobile: boolean = false;
   isLoading: boolean = true;
-  sortCriteria: { criteria: keyof EmployeeCriteria, direction: string } | null = null;
+  sortCriteria: { criteria: SortCriteria, direction: SortDirection } | null = null;
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -69,7 +69,7 @@ export class EmployeeListComponent implements OnInit {
     this.filterEmployees();
   }
 
-  onSortSelected(sortCriteria: { criteria: keyof EmployeeCriteria, direction: string }): void {
+  onSortSelected(sortCriteria: { criteria: SortCriteria, direction: SortDirection }): void {
     this.sortCriteria = sortCriteria;
     this.applySort();
   }
@@ -86,12 +86,12 @@ export class EmployeeListComponent implements OnInit {
       const { criteria, direction } = this.sortCriteria;
       this.filteredEmployees.sort((a, b) => {
         let comparison = 0;
-        if (criteria === 'dateOfBirth') {
+        if (criteria === SortCriteria.DateOfBirth) {
           comparison = new Date(a.dateOfBirth).getTime() - new Date(b.dateOfBirth).getTime();
         } else {
           comparison = (a[criteria] as string).localeCompare(b[criteria] as string);
         }
-        return direction === 'asc' ? comparison : -comparison;
+        return direction === SortDirection.Ascending ? comparison : -comparison;
       });
     }
   }

@@ -11,9 +11,14 @@ export interface ApiResponse {
     data: Employee[];
 }
 
-export interface EmployeeCriteria {
-    firstName: string;
-    lastName: string;
-    dateOfBirth: string;
-    jobTitle: string;
-  }
+export enum SortCriteria {
+    FirstName = 'firstName',
+    LastName = 'lastName',
+    DateOfBirth = 'dateOfBirth',
+    JobTitle = 'jobTitle'
+}
+  
+export enum SortDirection {
+    Ascending = 'asc',
+    Descending = 'desc'
+}

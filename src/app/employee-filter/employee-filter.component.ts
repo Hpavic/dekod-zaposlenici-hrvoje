@@ -32,7 +32,7 @@ export class EmployeeFilterComponent implements OnChanges {
   }
 
   emitSelectedPositions(): void {
-    console.log('Emitting selectedPositions:', this.selectedPositions);
+    console.log('Emitting selected filter positions:', this.selectedPositions);
     this.filterSelected.emit(this.selectedPositions);
   }
 }
