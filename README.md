@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 1) Ensure Node.js is Installed
 2) Navigate to the Project Directory : cd dekod-zaposlenici-hrvoje
-4) Install Angular CLI (if not installed) : npm install -g @angular/cli@17
+4) Install Angular CLI version 17 (if not installed) : npm install -g @angular/cli@17
 5) npm install
 6) ng serve
 7) Navigate to http://localhost:4200/
