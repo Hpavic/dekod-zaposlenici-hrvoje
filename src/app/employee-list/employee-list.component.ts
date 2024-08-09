@@ -6,11 +6,12 @@ import { Observer } from 'rxjs';
 import { Employee, ApiResponse, SortCriteria, SortDirection } from '../models/employee.model';
 import { EmployeeFilterComponent } from '../employee-filter/employee-filter.component';
 import { EmployeeSortComponent } from '../employee-sort/employee-sort.component';
+import { EmployeeSearchComponent } from '../employee-search/employee-search.component';
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [CommonModule, DatePipe, HttpClientModule, EmployeeFilterComponent, EmployeeSortComponent],
+  imports: [CommonModule, DatePipe, HttpClientModule, EmployeeFilterComponent, EmployeeSortComponent, EmployeeSearchComponent],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
@@ -23,6 +24,7 @@ export class EmployeeListComponent implements OnInit {
   isMobile: boolean = false;
   isLoading: boolean = true;
   sortCriteria: { criteria: SortCriteria, direction: SortDirection } | null = null;
+  searchTerm: string = '';
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -66,18 +68,44 @@ export class EmployeeListComponent implements OnInit {
 
   onFilterSelected(selectedPositions: string[]): void {
     this.selectedPositions = selectedPositions;
-    this.filterEmployees();
+    this.applyAllFilters();
   }
 
   onSortSelected(sortCriteria: { criteria: SortCriteria, direction: SortDirection }): void {
     this.sortCriteria = sortCriteria;
-    this.applySort();
+    this.applyAllFilters();
   }
 
-  filterEmployees(): void {
-    this.filteredEmployees = this.employees.filter(emp =>
-      this.selectedPositions.includes(emp.jobTitle)
-    );
+  onSearchTermChanged(searchTerm: string): void {
+    this.searchTerm = searchTerm;
+    this.applyAllFilters();
+  }
+
+  applyAllFilters(): void {
+    if (this.searchTerm.length < 3) {
+      // If the search term is less than 3 chars, show all employees filtered by selected positions
+      this.filteredEmployees = this.employees.filter(emp =>
+        this.selectedPositions.includes(emp.jobTitle)
+      );
+    } else {
+      // Otherwise, apply the search filter along with other filters
+      this.filteredEmployees = this.employees.filter(emp => {
+        const fullName = `${emp.firstName.toLowerCase()} ${emp.lastName.toLowerCase()}`;
+        const reversedFullName = `${emp.lastName.toLowerCase()} ${emp.firstName.toLowerCase()}`;
+        const searchName = this.searchTerm.toLowerCase();
+  
+        return (
+          this.selectedPositions.includes(emp.jobTitle) &&
+          (
+            emp.firstName.toLowerCase().includes(searchName) ||
+            emp.lastName.toLowerCase().includes(searchName) ||
+            fullName.includes(searchName) ||
+            reversedFullName.includes(searchName)
+          )
+        );
+      });
+    }
+
     this.applySort();
   }
 

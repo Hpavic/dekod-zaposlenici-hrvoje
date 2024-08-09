@@ -6,6 +6,11 @@
 </div>
 
 <div *ngIf="!errorMessage">
+  <!-- Render Search Component -->
+  <ng-container *ngIf="!isLoading">
+    <app-employee-search (searchTermChanged)="onSearchTermChanged($event)"></app-employee-search>
+  </ng-container>
+
   <!-- Render Filter Component -->
   <ng-container *ngIf="positions.length > 0">
     <app-employee-filter [positions]="positions" (filterSelected)="onFilterSelected($event)"></app-employee-filter>

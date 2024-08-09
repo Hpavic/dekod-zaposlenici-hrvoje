@@ -22,8 +22,10 @@ export class EmployeeSortComponent {
     if (this.selectedCriteria === criteria && this.selectedDirection === direction) {
       return;
     }
+
     this.selectedCriteria = criteria;
     this.selectedDirection = direction;
+    
     // Emit event with selected sorting criteria and direction
     console.log('Emitting selected sort criteria and direction:', { criteria, direction });
     this.sortSelected.emit({ criteria, direction });
