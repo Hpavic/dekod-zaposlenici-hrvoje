@@ -24,7 +24,7 @@ export enum SortDirection {
 }
 
 export const PaginationSettings = {
-    DefaultItemsPerPage: 5,
+    DefaultItemsPerPage: 8,
     DefaultCurrentPage: 1,
 }
 

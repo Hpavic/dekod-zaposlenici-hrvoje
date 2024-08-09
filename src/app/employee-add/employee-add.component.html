@@ -1,1 +1,37 @@
-<p>employee-add works!</p>
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="firstName">First Name</label>
+    <input id="firstName" formControlName="firstName" />
+    <div *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
+      <small *ngIf="employeeForm.get('firstName')?.errors?.['required']">First Name is required</small>
+      <small *ngIf="employeeForm.get('firstName')?.errors?.['minlength']">First Name must be at least 2 characters</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="lastName">Last Name</label>
+    <input id="lastName" formControlName="lastName" />
+    <div *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
+      <small *ngIf="employeeForm.get('lastName')?.errors?.['required']">Last Name is required</small>
+      <small *ngIf="employeeForm.get('lastName')?.errors?.['minlength']">Last Name must be at least 2 characters</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="dateOfBirth">Date of Birth</label>
+    <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
+    <div *ngIf="employeeForm.get('dateOfBirth')?.invalid && employeeForm.get('dateOfBirth')?.touched">
+      <small *ngIf="employeeForm.get('dateOfBirth')?.errors?.['required']">Date of Birth is required</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="jobTitle">Job Title</label>
+    <input id="jobTitle" formControlName="jobTitle" />
+    <div *ngIf="employeeForm.get('jobTitle')?.invalid && employeeForm.get('jobTitle')?.touched">
+      <small *ngIf="employeeForm.get('jobTitle')?.errors?.['required']">Job Title is required</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="employeeForm.invalid">Save</button>
+</form>
