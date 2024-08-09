@@ -1,19 +1,13 @@
 <div class="sort-container">
   <p>Sort by:</p>
-  <div>
-    <button (click)="sort(SortCriteria.FirstName, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.FirstName && selectedDirection === SortDirection.Ascending">First Name A-Z</button>
-    <button (click)="sort(SortCriteria.FirstName, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.FirstName && selectedDirection === SortDirection.Descending">First Name Z-A</button>
-  </div>
-  <div>
-    <button (click)="sort(SortCriteria.LastName, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.LastName && selectedDirection === SortDirection.Ascending">Last Name A-Z</button>
-    <button (click)="sort(SortCriteria.LastName, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.LastName && selectedDirection === SortDirection.Descending">Last Name Z-A</button>
-  </div>
-  <div>
-    <button (click)="sort(SortCriteria.DateOfBirth, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.DateOfBirth && selectedDirection === SortDirection.Ascending">Oldest -> Youngest</button>
-    <button (click)="sort(SortCriteria.DateOfBirth, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.DateOfBirth && selectedDirection === SortDirection.Descending">Youngest -> Oldest</button>
-  </div>
-  <div>
-    <button (click)="sort(SortCriteria.JobTitle, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.JobTitle && selectedDirection === SortDirection.Ascending">Job Title A-Z</button>
-    <button (click)="sort(SortCriteria.JobTitle, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.JobTitle && selectedDirection === SortDirection.Descending">Job Title Z-A</button>
+  <div class="sort-btn-container">
+    <button (click)="sort(SortCriteria.FirstName, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.FirstName && selectedDirection === SortDirection.Ascending" type="button" title="First Name A-Z">First Name A-Z</button>
+    <button (click)="sort(SortCriteria.FirstName, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.FirstName && selectedDirection === SortDirection.Descending" type="button" title="First Name Z-A">First Name Z-A</button>
+    <button (click)="sort(SortCriteria.LastName, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.LastName && selectedDirection === SortDirection.Ascending" type="button" title="Last Name A-Z">Last Name A-Z</button>
+    <button (click)="sort(SortCriteria.LastName, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.LastName && selectedDirection === SortDirection.Descending" type="button" title="Last Name Z-A">Last Name Z-A</button>
+    <button (click)="sort(SortCriteria.DateOfBirth, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.DateOfBirth && selectedDirection === SortDirection.Ascending" type="button" title="Oldest -> Youngest">Oldest -> Youngest</button>
+    <button (click)="sort(SortCriteria.DateOfBirth, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.DateOfBirth && selectedDirection === SortDirection.Descending" type="button" title="Youngest -> Oldest">Youngest -> Oldest</button>
+    <button (click)="sort(SortCriteria.JobTitle, SortDirection.Ascending)" [class.selected]="selectedCriteria === SortCriteria.JobTitle && selectedDirection === SortDirection.Ascending" type="button" title="Job Title A-Z">Job Title A-Z</button>
+    <button (click)="sort(SortCriteria.JobTitle, SortDirection.Descending)" [class.selected]="selectedCriteria === SortCriteria.JobTitle && selectedDirection === SortDirection.Descending" type="button" title="Job Title Z-A">Job Title Z-A</button>
   </div>
 </div>

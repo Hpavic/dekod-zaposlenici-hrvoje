@@ -1,0 +1,10 @@
+.search-container p {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.search-container input {
+    width: calc(100% - 16px);
+    padding: 4px 8px;
+}

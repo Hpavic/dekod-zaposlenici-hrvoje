@@ -5,68 +5,72 @@
   </button>
 </div>
 
-<div *ngIf="!errorMessage">
-  <!-- Render Search Component -->
-  <ng-container *ngIf="!isLoading">
-    <app-employee-search (searchTermChanged)="onSearchTermChanged($event)"></app-employee-search>
-  </ng-container>
+<!-- Loading indicator -->
+<div *ngIf="isLoading" class="loading-indicator">
+  Loading data, please wait...
+</div>
 
-  <!-- Render Filter Component -->
-  <ng-container *ngIf="positions.length > 0">
-    <app-employee-filter [positions]="positions" (filterSelected)="onFilterSelected($event)"></app-employee-filter>
-  </ng-container>
+<div *ngIf="!errorMessage" class="list-container">
+  <div class="list-content">
+    <div class="employee-list desktop-view" *ngIf="!isMobile && paginatedEmployees.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Job Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of paginatedEmployees">
+            <td>{{ employee.firstName || 'N/A' }}</td>
+            <td>{{ employee.lastName || 'N/A' }}</td>
+            <td>{{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</td>
+            <td>{{ employee.jobTitle || 'N/A' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <!-- Render Sort Component -->
-  <ng-container *ngIf="!isLoading">
-    <app-employee-sort (sortSelected)="onSortSelected($event)"></app-employee-sort>
-  </ng-container>
+    <div class="employee-list mobile-view" *ngIf="isMobile && paginatedEmployees.length > 0">
+      <div *ngFor="let employee of paginatedEmployees" class="employee-card">
+        <p><strong>First Name:</strong> {{ employee.firstName || 'N/A' }}</p>
+        <p><strong>Last Name:</strong> {{ employee.lastName || 'N/A' }}</p>
+        <p><strong>Date of Birth:</strong> {{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</p>
+        <p><strong>Job Title:</strong> {{ employee.jobTitle || 'N/A' }}</p>
+      </div>
+    </div>
 
-  <!-- Display message when no employees are found -->
-  <div *ngIf="paginatedEmployees.length === 0 && !isLoading" class="no-results">
-    No results found.
-  </div>
+    <!-- Pagination Component -->
+    <ng-container *ngIf="!isLoading && filteredEmployees.length > 0">
+      <app-employee-pagination 
+        [totalItems]="filteredEmployees.length" 
+        [itemsPerPage]="itemsPerPage"
+        (pageChanged)="onPageChanged($event)">
+      </app-employee-pagination>
+    </ng-container>
 
-  <div class="employee-list desktop-view" *ngIf="!isMobile && paginatedEmployees.length > 0">
-    <table>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Date of Birth</th>
-          <th>Job Title</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let employee of paginatedEmployees">
-          <td>{{ employee.firstName || 'N/A' }}</td>
-          <td>{{ employee.lastName || 'N/A' }}</td>
-          <td>{{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</td>
-          <td>{{ employee.jobTitle || 'N/A' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="employee-list mobile-view" *ngIf="isMobile && paginatedEmployees.length > 0">
-    <div *ngFor="let employee of paginatedEmployees" class="employee-card">
-      <p><strong>First Name:</strong> {{ employee.firstName || 'N/A' }}</p>
-      <p><strong>Last Name:</strong> {{ employee.lastName || 'N/A' }}</p>
-      <p><strong>Date of Birth:</strong> {{ employee.dateOfBirth ? (employee.dateOfBirth | date) : 'N/A' }}</p>
-      <p><strong>Job Title:</strong> {{ employee.jobTitle || 'N/A' }}</p>
+    <!-- Display message when no employees are found -->
+    <div *ngIf="paginatedEmployees.length === 0 && !isLoading" class="no-results">
+      No results found.
     </div>
   </div>
 
-  <!-- Pagination Component -->
-  <ng-container *ngIf="!isLoading && filteredEmployees.length > 0">
-    <app-employee-pagination 
-      [totalItems]="filteredEmployees.length" 
-      [itemsPerPage]="itemsPerPage"
-      (pageChanged)="onPageChanged($event)">
-    </app-employee-pagination>
-  </ng-container>
+  <div class="list-filter">
+    <!-- Render Search Component -->
+    <ng-container *ngIf="!isLoading">
+      <app-employee-search (searchTermChanged)="onSearchTermChanged($event)"></app-employee-search>
+    </ng-container>
 
-  <!-- Loading indicator -->
-  <div *ngIf="isLoading" class="loading-indicator">
-    Loading data, please wait...
+    <!-- Render Filter Component -->
+    <ng-container *ngIf="positions.length > 0">
+      <app-employee-filter [positions]="positions" (filterSelected)="onFilterSelected($event)"></app-employee-filter>
+    </ng-container>
+
+    <!-- Render Sort Component -->
+    <ng-container *ngIf="!isLoading">
+      <app-employee-sort (sortSelected)="onSortSelected($event)"></app-employee-sort>
+    </ng-container>
   </div>
 </div>
