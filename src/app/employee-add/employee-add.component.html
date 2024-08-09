@@ -1,6 +1,9 @@
 <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
   <div>
-    <label for="firstName">First Name</label>
+    <div class="title">
+      <label for="firstName">First Name</label>
+      <div class="required">*</div>
+    </div>
     <input id="firstName" formControlName="firstName" />
     <div *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
       <small *ngIf="employeeForm.get('firstName')?.errors?.['required']">First Name is required</small>
@@ -9,7 +12,10 @@
   </div>
 
   <div>
-    <label for="lastName">Last Name</label>
+    <div class="title">
+      <label for="lastName">Last Name</label>
+      <div class="required">*</div>
+    </div>
     <input id="lastName" formControlName="lastName" />
     <div *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
       <small *ngIf="employeeForm.get('lastName')?.errors?.['required']">Last Name is required</small>
@@ -18,20 +24,27 @@
   </div>
 
   <div>
-    <label for="dateOfBirth">Date of Birth</label>
+    <div class="title">
+      <label for="dateOfBirth">Date of Birth</label>
+      <div class="required">*</div>
+    </div>
     <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
     <div *ngIf="employeeForm.get('dateOfBirth')?.invalid && employeeForm.get('dateOfBirth')?.touched">
       <small *ngIf="employeeForm.get('dateOfBirth')?.errors?.['required']">Date of Birth is required</small>
+      <small *ngIf="employeeForm.get('dateOfBirth')?.errors?.['dateInFuture']">Date of Birth cannot be in the future</small>
     </div>
   </div>
 
   <div>
-    <label for="jobTitle">Job Title</label>
+    <div class="title">
+      <label for="jobTitle">Job Title</label>
+      <div class="required">*</div>
+    </div>
     <input id="jobTitle" formControlName="jobTitle" />
     <div *ngIf="employeeForm.get('jobTitle')?.invalid && employeeForm.get('jobTitle')?.touched">
       <small *ngIf="employeeForm.get('jobTitle')?.errors?.['required']">Job Title is required</small>
     </div>
   </div>
 
-  <button type="submit" [disabled]="employeeForm.invalid">Save</button>
+  <button type="submit" [disabled]="employeeForm.invalid">Add</button>
 </form>

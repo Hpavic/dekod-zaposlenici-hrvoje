@@ -1,10 +1,12 @@
+<header>
+  <nav class="navigation">
+    <button (click)="navigateToEmployees()" [ngClass]="{'active': isActive('employees')}" type='button'>View Employees</button>
+    <button (click)="navigateToAddEmployee()" [ngClass]="{'active': isActive('add-employee')}" type='button'>Add Employee</button>
+  </nav>
+</header>
+
 <main class="main">
   <div class="content">
-    <nav>
-      <button (click)="navigateToEmployees()" [ngClass]="{'active': isActive('employees')}">View Employees</button>
-      <button (click)="navigateToAddEmployee()" [ngClass]="{'active': isActive('add-employee')}">Add Employee</button>
-    </nav>
+    <router-outlet></router-outlet>
   </div>
 </main>
-
-<router-outlet><router-outlet />

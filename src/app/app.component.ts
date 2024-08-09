@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -16,13 +16,20 @@ export class AppComponent {
 
   constructor(private router: Router) {}
 
+  ngOnInit(): void {
+    // Set the active route when the component initializes or the route changes
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.activeRoute = event.urlAfterRedirects.split('/')[1];
+      }
+    });
+  }
+
   navigateToEmployees(): void {
-    this.activeRoute = 'employees';
     this.router.navigate(['/employees']);
   }
 
   navigateToAddEmployee(): void {
-    this.activeRoute = 'add-employee';
     this.router.navigate(['/add-employee']);
   }
 

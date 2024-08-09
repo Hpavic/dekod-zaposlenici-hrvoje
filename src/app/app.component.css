@@ -1,0 +1,36 @@
+header {
+    margin-bottom: 8px;
+}
+
+header .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+header .navigation button {
+    width: 125px;
+    background-color: #c5c5c5;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: bold;
+}
+
+header .navigation button:hover {
+    color: crimson;
+    cursor: pointer;
+}
+
+header .navigation button.active {
+    color: crimson;
+    border: 2px solid crimson;
+}
+
+@media (max-width: 300px) {
+    header .navigation button {
+        width: 100%;
+    }
+}
