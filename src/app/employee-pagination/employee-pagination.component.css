@@ -1,0 +1,16 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+  
+.pagination-container button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination-container button.active {
+    font-weight: bold;
+    text-decoration: underline;
+}

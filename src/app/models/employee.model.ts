@@ -22,3 +22,14 @@ export enum SortDirection {
     Ascending = 'asc',
     Descending = 'desc'
 }
+
+export const PaginationSettings = {
+    DefaultItemsPerPage: 5,
+    DefaultCurrentPage: 1,
+}
+
+export enum PaginationConstants {
+    TotalItems = 'totalItems',
+    ItemsPerPage = 'itemsPerPage',
+    CurrentPage = 'currentPage',
+}

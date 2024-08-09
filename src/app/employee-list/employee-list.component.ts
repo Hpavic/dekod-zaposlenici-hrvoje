@@ -3,21 +3,24 @@ import { EmployeeService } from '../services/employee.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Observer } from 'rxjs';
-import { Employee, ApiResponse, SortCriteria, SortDirection } from '../models/employee.model';
+import { Employee, ApiResponse, SortCriteria, SortDirection, PaginationSettings } from '../models/employee.model';
 import { EmployeeFilterComponent } from '../employee-filter/employee-filter.component';
 import { EmployeeSortComponent } from '../employee-sort/employee-sort.component';
 import { EmployeeSearchComponent } from '../employee-search/employee-search.component';
+import { EmployeePaginationComponent } from '../employee-pagination/employee-pagination.component';
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [CommonModule, DatePipe, HttpClientModule, EmployeeFilterComponent, EmployeeSortComponent, EmployeeSearchComponent],
+  imports: [CommonModule, DatePipe, HttpClientModule, 
+    EmployeeFilterComponent, EmployeeSortComponent, EmployeeSearchComponent, EmployeePaginationComponent],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
 export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
+  paginatedEmployees: Employee[] = [];
   positions: string[] = [];
   selectedPositions: string[] = [];
   errorMessage: string | null = null;
@@ -25,6 +28,8 @@ export class EmployeeListComponent implements OnInit {
   isLoading: boolean = true;
   sortCriteria: { criteria: SortCriteria, direction: SortDirection } | null = null;
   searchTerm: string = '';
+  itemsPerPage: number = PaginationSettings.DefaultItemsPerPage;
+  currentPage: number = PaginationSettings.DefaultCurrentPage;
 
   constructor(private employeeService: EmployeeService) {}
 
@@ -50,7 +55,7 @@ export class EmployeeListComponent implements OnInit {
           this.positions = [...new Set(this.employees.map(emp => emp.jobTitle))];
           this.selectedPositions = [...this.positions];
           this.filteredEmployees = [...this.employees];
-          this.applySort();
+          this.applyAllFilters();
           this.errorMessage = null;
         }
         this.isLoading = false;
@@ -81,6 +86,11 @@ export class EmployeeListComponent implements OnInit {
     this.applyAllFilters();
   }
 
+  onPageChanged(page: number): void {
+    this.currentPage = page;
+    this.applyPagination();
+  }
+
   applyAllFilters(): void {
     if (this.searchTerm.length < 3) {
       // If the search term is less than 3 chars, show all employees filtered by selected positions
@@ -107,6 +117,10 @@ export class EmployeeListComponent implements OnInit {
     }
 
     this.applySort();
+
+    // Reset pagination to the first page whenever filters are applied
+    this.currentPage = 1;
+    this.applyPagination();
   }
 
   applySort(): void {
@@ -122,6 +136,12 @@ export class EmployeeListComponent implements OnInit {
         return direction === SortDirection.Ascending ? comparison : -comparison;
       });
     }
+  }
+
+  applyPagination(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedEmployees = this.filteredEmployees.slice(startIndex, endIndex);
   }
 
   retry(): void {
